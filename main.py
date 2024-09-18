@@ -89,7 +89,7 @@ def sleep():
     input("Press Enter to continue...")
 
 
-def add_single_product():
+def add_product():
     while True:
         barcode_id = validate_string_input("Enter barcode ID: ")
         # Check if the barcode ID already exists
@@ -133,7 +133,7 @@ def add_single_product():
         print("Product addition cancelled.")
 
 
-def add_product():
+def menu_add_product():
     while True:
         clear()
         print("\n\nAdd Product")
@@ -143,7 +143,7 @@ def add_product():
 
         if choice == "1":
             clear()
-            add_single_product()
+            add_product()
             sleep()
             break
         elif choice == "2":
@@ -260,13 +260,16 @@ def update_product():
     found_products = search_products()
 
     if found_products:
-        # Display search results
-        print("\nSelect the product to update:")
-        read(found_products)
+        if len(found_products) > 1:
+            # Display search results
+            print("\nSelect the product to update:")
+            read(found_products)
 
-        # Ask user to select a product to update
-        product_to_update = select_product(
-            found_products, "Enter the number of the product you want to update: ")
+            # Ask user to select a product to update
+            product_to_update = select_product(
+                found_products, "Enter the number of the product you want to update: ")
+        else:
+            product_to_update = found_products[0]
 
         # Update product details
         print(f"\nUpdating product: {product_to_update['name']}")
@@ -329,7 +332,7 @@ def delete_product():
 
         if len(found_products) > 1:
             # Display search results
-            print("\nSelect the product to update:")
+            print("\nSelect the product to delete:")
             read(found_products)
             # Ask user to select a product to delete, if multiple products are found
             product_to_delete = select_product(
@@ -427,7 +430,7 @@ def main_menu():
         choice = input("Enter choice: ")
 
         if choice == "1":
-            add_product()
+            menu_add_product()
         elif choice == "2":
             view_product()
         elif choice == "3":
